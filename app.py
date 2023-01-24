@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from geopy.geocoders import Nominatim
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static")
 geolocator = Nominatim(user_agent="geo_loc")
 
 
@@ -37,8 +37,8 @@ def get_coordinates():
     return jsonify(lat=lat, lon=lon)
 
 
-@app.route('/static/<path:path>')
-def send_js(path):
+@app.route('/send_static/<path:path>')
+def send_static(path):
     return send_from_directory('static', path)
 
 

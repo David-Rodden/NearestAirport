@@ -1,0 +1,26 @@
+#parent-container {
+    text-align: center;
+}
+#parent-container {
+    height: 50px;
+    line-height: 50px;
+}
+
+#get-location    {
+    display: inline-block;
+}
+#parent-container {
+    margin-top: 20px;
+}
+#get-location {
+    background-color: blue;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+@media (max-width: 600px) {
+    #get-location {
+        font-size: 14px;
+    }
+}

@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
@@ -12,11 +13,13 @@
 
 </head>
 <body>
-<form id="location-form">
-    <input type="text" id="address" placeholder="Enter an address">
-    <button type="submit" id="get-location">Get Location</button>
-</form>
+
+<div id="parent-container">
+    <form id="location-form">
+        <button type="submit" id="get-location">Get Location</button>
+    </form>
+</div>
 <div id="map" style="height: 500px;"></div>
-<script src="{{ url_for('send_js', path='map.js') }}"></script>
+<script src="{{ url_for('send_static', path='map.js') }}"></script>
 </body>
 </html>
