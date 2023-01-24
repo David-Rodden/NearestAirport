@@ -24,6 +24,7 @@ def location_data():
     # location = geolocator.reverse(f"{lat}, {lon}", exactly_one=True)
     # city = location.raw['address'].get('town') or location.raw['address'].get('city') or location.raw['address'].get(
     #     'village')
+
     # return jsonify({"city": city} if city else {"error": "Unable to determine location"})
 
 
@@ -34,6 +35,11 @@ def get_coordinates():
     lat = location.latitude
     lon = location.longitude
     return jsonify(lat=lat, lon=lon)
+
+
+@app.route('/static/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
 
 
 if __name__ == '__main__':

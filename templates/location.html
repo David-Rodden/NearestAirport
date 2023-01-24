@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -7,21 +8,7 @@
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    document.getElementById("lat").value = lat;
-                    document.getElementById("lon").value = lon;
-                    document.forms[0].submit();
-                });
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-    </script>
+    <title>GeoLocator Tool</title>
 
 </head>
 <body>
@@ -30,32 +17,6 @@
     <button type="submit" id="get-location">Get Location</button>
 </form>
 <div id="map" style="height: 500px;"></div>
-<script>
-    let marker;
-    const map = L.map('map').setView([37.7749, -122.4194], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-        maxZoom: 18
-    }).addTo(map);
-    $("#location-form").submit(function (event) {
-        event.preventDefault();
-         if (marker) {
-            map.removeLayer(marker);
-        }
-        const address = $("#address").val();
-        $.ajax({
-            type: "POST",
-            url: '/get_coordinates',
-            contentType: "application/json",
-            data: JSON.stringify({'address': address}),
-            success: function (data) {
-                var lat = data.lat;
-                var lon = data.lon;
-                marker = L.marker([lat, lon]).addTo(map);
-                map.setView([lat, lon], 13);
-            }
-        });
-    });
-</script>
+<script src="{{ url_for('send_js', path='map.js') }}"></script>
 </body>
 </html>
