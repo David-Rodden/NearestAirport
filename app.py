@@ -21,7 +21,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template("location.html")
+    return render_template("index.html")
 
 
 @app.route('/location_data', methods=['POST'])
