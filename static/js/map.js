@@ -9,11 +9,23 @@ $("#location-form").submit(function (event) {
     if (marker) {
         map.removeLayer(marker);
     }
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
+    // getting our current position here in lat/lon
+    navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude, lon = position.coords.longitude;
         marker = L.marker([lat, lon]).addTo(map);
         map.setView([lat, lon], 13);
+        // getting nearest airport by calling our flask endpoint
+        fetch(`/airports/${lat}/${lon}`)
+            .then(response => {
+                var c = response.json()
+                console.log(c);
+                return c;
+            })
+            .then(data => {
+                // Create a new marker on the leaflet map
+                const marker = L.marker([data.lat, data.lon]).addTo(map);
+                marker.bindPopup(data.name).openPopup();
+            });
     }, function (error) {
         if (error.code === error.PERMISSION_DENIED) {
             alert("You denied access to your location. Please provide your location manually.");
