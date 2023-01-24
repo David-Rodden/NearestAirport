@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from geopy.geocoders import Nominatim
 
 app = Flask(__name__)
+geolocator = Nominatim(user_agent="geo_loc")
 
 
 @app.route('/')
@@ -25,11 +26,15 @@ def location_data():
     #     'village')
     # return jsonify({"city": city} if city else {"error": "Unable to determine location"})
 
-@app.route('/get_coordinates')
+
+@app.route('/get_coordinates', methods=['POST'])
 def get_coordinates():
-    lat = 45.5231
-    lon = -122.6765
+    address = request.json['address']
+    location = geolocator.geocode(address)
+    lat = location.latitude
+    lon = location.longitude
     return jsonify(lat=lat, lon=lon)
+
 
 if __name__ == '__main__':
     app.run()

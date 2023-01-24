@@ -25,7 +25,10 @@
 
 </head>
 <body>
-<button id="get-location">Get Location</button>
+<form id="location-form">
+    <input type="text" id="address" placeholder="Enter an address">
+    <button type="submit" id="get-location">Get Location</button>
+</form>
 <div id="map" style="height: 500px;"></div>
 <script>
     let marker;
@@ -34,15 +37,20 @@
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         maxZoom: 18
     }).addTo(map);
-    $("#get-location").click(function () {
-        if (marker) {
+    $("#location-form").submit(function (event) {
+        event.preventDefault();
+         if (marker) {
             map.removeLayer(marker);
         }
+        const address = $("#address").val();
         $.ajax({
+            type: "POST",
             url: '/get_coordinates',
+            contentType: "application/json",
+            data: JSON.stringify({'address': address}),
             success: function (data) {
-                const lat = data.lat;
-                const lon = data.lon;
+                var lat = data.lat;
+                var lon = data.lon;
                 marker = L.marker([lat, lon]).addTo(map);
                 map.setView([lat, lon], 13);
             }
