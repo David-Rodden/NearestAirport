@@ -1,1 +1,1 @@
-web: gunicorn app:app
+gunicorn --config gunicorn.conf.py myapp:app
